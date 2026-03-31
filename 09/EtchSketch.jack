@@ -1,0 +1,113 @@
+class EtchSketch {
+
+    field int x, y;
+    field boolean drawing;
+
+    function void run() {
+        var EtchSketch app;
+
+        let app = EtchSketch.new();
+        do app.init();
+        do app.loop();
+
+        return;
+    }
+
+    constructor EtchSketch new() {
+        let x = 256;     
+        let y = 128;
+        let drawing = true;
+        return this;
+    }
+
+    method void init() {
+        do Screen.clearScreen();
+        do Output.printString("Etch-A-Sketch");
+        do Output.println();
+        do Output.printString("Arrows: Move | Space: Toggle Draw | C: Clear");
+        do Output.println();
+        return;
+    }
+
+    method void loop() {
+        var int key;
+
+        while (true) {
+
+            let key = Keyboard.keyPressed();
+
+            do handleInput(key);
+
+            if (drawing) {
+                do draw();
+            }
+
+            do Sys.wait(5); 
+        }
+
+        return;
+    }
+
+    method void handleInput(int key) {
+
+        // left
+        if (key = 130) {
+            let x = x - 1;
+        }
+
+        // up
+        if (key = 131) {
+            let y = y - 1;
+        }
+
+        // right
+        if (key = 132) {
+            let x = x + 1;
+        }
+
+        // down
+        if (key = 133) {
+            let y = y + 1;
+        }
+
+        // click space to draw
+        if (key = 32) {
+            let drawing = ~drawing;
+            do Sys.wait(150); 
+        }
+
+        // clear screen
+        if (key = 67) {
+            do Screen.clearScreen();
+            do Sys.wait(150); 
+        }
+        do constrain();
+        return;
+    }
+
+    method void constrain() {
+        if (x < 0) {
+            let x = 0;
+        }
+
+        if (x > 511) {
+            let x = 511;
+        }
+
+        if (y < 0) {
+            let y = 0;
+        }
+
+        if (y > 255) {
+            let y = 255;
+        }
+        return;
+    }
+
+    method void draw() {
+        do Screen.drawPixel(x, y);
+        do Screen.drawPixel(x + 1, y);
+        do Screen.drawPixel(x, y + 1);
+        return;
+    }
+}
