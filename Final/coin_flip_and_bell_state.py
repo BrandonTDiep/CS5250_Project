@@ -1,3 +1,14 @@
+"""
+CS5250 Final — Quantum Coin Flip and Bell State (Qiskit), from Coin_Flip.ipynb and Bell_State.ipynb.
+"""
+
+import sys
+
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (OSError, ValueError):
+        pass
 
 from qiskit import QuantumCircuit, transpile
 from qiskit_aer import AerSimulator
